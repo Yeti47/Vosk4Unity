@@ -75,7 +75,7 @@ namespace Yetibyte.Unity.SpeechRecognition.KeywordDetection
 
             OnExecutingVoiceCommand(voiceCommandEventsArgs);
             voiceCommand.Execute();
-            OnExecutingVoiceCommand(voiceCommandEventsArgs);
+            OnExecutedVoiceCommand(voiceCommandEventsArgs);
         }
 
         private bool ProcessFullResult(VoskResult result)

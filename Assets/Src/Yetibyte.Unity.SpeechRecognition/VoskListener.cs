@@ -77,7 +77,7 @@ namespace Yetibyte.Unity.SpeechRecognition
         private VoskPartialResult _previousPartialResult;
 
         private VoskPartialResultJsonDeserializer _partialResultDeserializer;
-        private VoskResultJsonDeserializer _resultDerserializer;
+        private VoskResultJsonDeserializer _resultDeserializer;
 
         #endregion
 
@@ -144,7 +144,7 @@ namespace Yetibyte.Unity.SpeechRecognition
         protected virtual void Awake()
         {
             _partialResultDeserializer = new VoskPartialResultJsonDeserializer();
-            _resultDerserializer = new VoskResultJsonDeserializer();
+            _resultDeserializer = new VoskResultJsonDeserializer();
         }
 
         protected virtual void Start()
@@ -189,8 +189,8 @@ namespace Yetibyte.Unity.SpeechRecognition
 
                             result = _voskRecognizer.Result();
 
-                            _resultDerserializer.UseAlternatives = MaxAlternatives > 0;
-                            VoskResult voskResult = _resultDerserializer.Deserialize(result);
+                            _resultDeserializer.UseAlternatives = MaxAlternatives > 0;
+                            VoskResult voskResult = _resultDeserializer.Deserialize(result);
 
                             OnResultFound(voskResult);
                         }
