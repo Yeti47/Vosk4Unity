@@ -59,6 +59,7 @@ namespace Yetibyte.Unity.SpeechRecognition
         private int _audioClipBufferSeconds = 1;
 
         [SerializeField]
+        [Editor.RecordingDevice]
         private string _listeningDevice = null;
 
         [SerializeField]
@@ -164,7 +165,7 @@ namespace Yetibyte.Unity.SpeechRecognition
         {
             if (IsListening && IsReady)
             {
-                int micPos = Microphone.GetPosition(null);
+                int micPos = Microphone.GetPosition(_listeningDevice);
 
                 int sampleDelta = micPos >= _previousMicPosition ? 
                     (micPos - _previousMicPosition) 
@@ -241,8 +242,11 @@ namespace Yetibyte.Unity.SpeechRecognition
 
             try
             {
-                if (string.IsNullOrWhiteSpace(AbsoluteModelPath))
+                if (string.IsNullOrWhiteSpace(ModelName) || string.IsNullOrWhiteSpace(AbsoluteModelPath))
                     throw new Exception("Model not specified.");
+
+                if (!Editor.VoskModelManagerSettings.GetOrCreateSettings().ModelExists(ModelName))
+                    throw new Exception($"Model '{ModelName}' does not exist.");
 
                 Model model = new Model(AbsoluteModelPath);
                 _model = model;

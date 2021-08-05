@@ -73,6 +73,8 @@ namespace Yetibyte.Unity.SpeechRecognition.Editor
 
         private static bool IsValidModelDirectory(string path)
         {
+            if (!System.IO.Directory.Exists(path))
+                return false;
 
             var subDirs = System.IO.Directory.EnumerateDirectories(path);
 
@@ -140,6 +142,14 @@ namespace Yetibyte.Unity.SpeechRecognition.Editor
             }
 
             return false;
+        }
+
+        public bool ModelExists(string modelName)
+        {
+            string absolutePath = GetAbsoluteModelPath(modelName);
+
+            return IsValidModelDirectory(absolutePath);
+
         }
 
         private void OnEnable()

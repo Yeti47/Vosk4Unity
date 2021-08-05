@@ -214,6 +214,8 @@ GameObject:
   m_Component:
   - component: {fileID: 928893152}
   - component: {fileID: 928893151}
+  - component: {fileID: 928893154}
+  - component: {fileID: 928893153}
   m_Layer: 0
   m_Name: VoskTest
   m_TagString: Untagged
@@ -243,10 +245,10 @@ MonoBehaviour:
   _audioClipBufferSeconds: 1
   _listeningDevice: 
   _debugOptions:
-    _logResults: 1
-    _logPartialResults: 1
-    _logModelLoad: 1
-    _logRecording: 1
+    _logResults: 0
+    _logPartialResults: 0
+    _logModelLoad: 0
+    _logRecording: 0
 --- !u!4 &928893152
 Transform:
   m_ObjectHideFlags: 0
@@ -261,3 +263,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &928893153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 928893150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86082f31489ba08449c2521e9acd8a21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &928893154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 928893150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1e1cd6af4ea48941a37f434765149a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _listener: {fileID: 928893151}
+  _settings:
+    _mode: 2
+    _confidenceThreshold: 50
+  _voiceCommands:
+  - _name: Test
+    _keywordSettings:
+    - _modelName: 
+      _keyword: test
+    _callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 928893153}
+          m_MethodName: OnVoiceCommandExecute
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
