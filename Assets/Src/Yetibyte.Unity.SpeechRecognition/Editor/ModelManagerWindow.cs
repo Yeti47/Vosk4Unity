@@ -9,6 +9,7 @@ using Yetibyte.Unity.SpeechRecognition.ModelManagement;
 
 namespace Yetibyte.Unity.SpeechRecognition.Editor
 {
+
     public class ModelManagerWindow : EditorWindow
     {
         private class DetailWindow : EditorWindow

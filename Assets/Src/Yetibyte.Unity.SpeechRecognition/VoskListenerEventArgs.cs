@@ -18,6 +18,8 @@ namespace Yetibyte.Unity.SpeechRecognition
     {
         public VoskPartialResult PartialResult { get; }
 
+        public bool Cancel { get; set; }
+
         public VoskPartialResultEventArgs(VoskPartialResult partialResult, VoskListener listener) : base(listener)
         {
             PartialResult = partialResult ?? throw new ArgumentNullException(nameof(partialResult));

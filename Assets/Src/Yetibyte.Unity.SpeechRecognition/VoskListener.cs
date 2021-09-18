@@ -177,6 +177,8 @@ namespace Yetibyte.Unity.SpeechRecognition
 
                     int bufferCount = Mathf.CeilToInt(waveData.Length / (float)AudioChunkSize);
 
+                    bool cancel = false;
+
                     for (int i = 0; i < bufferCount; i++)
                     {
                         byte[] buffer = waveData.Skip(i * AudioChunkSize).Take(AudioChunkSize).ToArray();
@@ -202,8 +204,18 @@ namespace Yetibyte.Unity.SpeechRecognition
 
                             if(partialResult != null && partialResult.Text != _previousPartialResult?.Text)
                             {
-                                OnPartialResultFound(partialResult);
+                                cancel = OnPartialResultFound(partialResult);
                                 _previousPartialResult = partialResult;
+
+                                if(cancel)
+                                {
+                                    result = _voskRecognizer.FinalResult();
+
+                                    _resultDeserializer.UseAlternatives = MaxAlternatives > 0;
+                                    VoskResult voskResult = _resultDeserializer.Deserialize(result);
+
+                                    OnResultFound(voskResult);
+                                }
                             }
 
                         }
@@ -335,10 +347,10 @@ namespace Yetibyte.Unity.SpeechRecognition
             handler?.Invoke(this, voskResultEventArgs);
         }
 
-        protected virtual void OnPartialResultFound(VoskPartialResult partialResult)
+        protected virtual bool OnPartialResultFound(VoskPartialResult partialResult)
         {
             if (partialResult is null || partialResult.IsEmpty)
-                return;
+                return false;
 
             if(DebugOptions.LogPartialResults)
                 Debug.Log($"Raising PartialResultFound event. Result: {partialResult}");
@@ -349,6 +361,8 @@ namespace Yetibyte.Unity.SpeechRecognition
 
             var handler = PartialResultFound;
             handler?.Invoke(this, voskPartialResultEventArgs);
+
+            return voskPartialResultEventArgs.Cancel;
         }
 
         #endregion

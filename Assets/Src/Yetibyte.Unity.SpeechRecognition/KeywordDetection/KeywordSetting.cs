@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using Yetibyte.Unity.SpeechRecognition.Editor;
 
 namespace Yetibyte.Unity.SpeechRecognition.KeywordDetection
 {
+
     [Serializable]
     public class KeywordSetting
     {
@@ -15,8 +17,13 @@ namespace Yetibyte.Unity.SpeechRecognition.KeywordDetection
         [SerializeField]
         private string _keyword;
 
+        [SerializeField]
+        private KeywordMatchMode _matchMode = KeywordMatchMode.Text;
+
         public string ModelName => _modelName ?? string.Empty;
         public string Keyword => _keyword ?? string.Empty;
+
+        public KeywordMatchMode MatchMode => _matchMode;
 
         protected KeywordSetting() { }
 
@@ -36,8 +43,19 @@ namespace Yetibyte.Unity.SpeechRecognition.KeywordDetection
 
         public bool HasTextualMatch(string detectedText)
         {
-            return !string.IsNullOrWhiteSpace(detectedText)
-                && detectedText.Trim().ToLower().Contains(Keyword.Trim().ToLower());
+
+            if(_matchMode == KeywordMatchMode.Text)
+            {
+                return !string.IsNullOrWhiteSpace(detectedText)
+                    && detectedText.Trim().ToLower().Contains(Keyword.Trim().ToLower());
+            }
+            else if(_matchMode == KeywordMatchMode.RegularExpression)
+            {
+                return Regex.IsMatch(detectedText, Keyword);
+            }
+
+            throw new InvalidOperationException("Unsupported Keyword Match Mode!");
+                
         }
 
     }

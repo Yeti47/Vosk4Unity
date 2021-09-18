@@ -8,19 +8,23 @@ namespace Yetibyte.Unity.SpeechRecognition.KeywordDetection
 {
 
     [Serializable]
-    public class VoiceCommandEvent : UnityEvent<VoiceCommand> { }
+    public class VoiceCommandEvent : UnityEvent<VoiceCommand, string> { }
 
     [Serializable]
     public class VoiceCommand
     {
+#pragma warning disable CS0649 // BEGIN serializable fields
+
         [SerializeField]
         private string _name;
 
         [SerializeField]
-        private List<KeywordSetting> _keywordSettings;
+        private List<KeywordSetting> _keywordSettings = new List<KeywordSetting>();
 
         [SerializeField]
         private VoiceCommandEvent _callback;
+
+#pragma warning restore CS0649 // END serializable fields
 
         public string Name => _name;
 
@@ -36,11 +40,11 @@ namespace Yetibyte.Unity.SpeechRecognition.KeywordDetection
             return _keywordSettings.Any(k => k.IsMatch(modelName, detectedText));
         }
 
-        public void Execute()
+        public void Execute(string detectedText)
         {
             if(_callback != null)
             {
-                _callback.Invoke(this);
+                _callback.Invoke(this, detectedText);
             }
         }
 

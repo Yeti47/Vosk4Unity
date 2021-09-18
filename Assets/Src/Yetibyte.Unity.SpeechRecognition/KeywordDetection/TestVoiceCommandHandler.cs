@@ -4,9 +4,9 @@ namespace Yetibyte.Unity.SpeechRecognition.KeywordDetection
 {
     public class TestVoiceCommandHandler : MonoBehaviour
     {
-        public void OnVoiceCommandExecute(VoiceCommand voiceCommand)
+        public void OnVoiceCommandExecute(VoiceCommand voiceCommand, string detectedText)
         {
-            Debug.Log($"{nameof(TestVoiceCommandHandler)} received voice command '{voiceCommand?.Name}'.");
+            Debug.Log($"{nameof(TestVoiceCommandHandler)} received voice command '{voiceCommand?.Name}'. Detected Text: '{detectedText}'");
         }
     }
 

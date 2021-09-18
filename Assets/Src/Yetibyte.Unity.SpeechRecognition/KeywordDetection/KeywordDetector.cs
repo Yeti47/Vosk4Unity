@@ -29,7 +29,7 @@ namespace Yetibyte.Unity.SpeechRecognition.KeywordDetection
         private KeywordDetectionSettings _settings = KeywordDetectionSettings.CreateDefault();
 
         [SerializeField]
-        private List<VoiceCommand> _voiceCommands = new List<VoiceCommand>();
+        private VoiceCommandList _voiceCommands = new VoiceCommandList();
 
 #pragma warning restore CS0649 // END serializable fields
 
@@ -59,22 +59,22 @@ namespace Yetibyte.Unity.SpeechRecognition.KeywordDetection
                 return false;
             }
 
-            var matchingVoiceCommands = FindMatchingCommands(result.Text);
+            var matchingVoiceCommands = _voiceCommands.FindMatchingCommands(_listener.ModelName, result.Text);
 
-            matchingVoiceCommands.ForEach(ExecuteVoiceCommand);
+            matchingVoiceCommands.ForEach(c => ExecuteVoiceCommand(c, result.Text));
 
             if (matchingVoiceCommands.Any())
                 _hasConsumedPartialResult = true;
 
-            return true;
+            return matchingVoiceCommands.Any();
         }
 
-        private void ExecuteVoiceCommand(VoiceCommand voiceCommand)
+        private void ExecuteVoiceCommand(VoiceCommand voiceCommand, string detectedText)
         {
-            var voiceCommandEventsArgs = new VoiceCommandExecutionEventArgs(voiceCommand);
+            var voiceCommandEventsArgs = new VoiceCommandExecutionEventArgs(voiceCommand, detectedText);
 
             OnExecutingVoiceCommand(voiceCommandEventsArgs);
-            voiceCommand.Execute();
+            voiceCommand.Execute(detectedText);
             OnExecutedVoiceCommand(voiceCommandEventsArgs);
         }
 
@@ -86,11 +86,21 @@ namespace Yetibyte.Unity.SpeechRecognition.KeywordDetection
             }
 
             IEnumerable<VoskAlternative> candidateAlternatives = 
-                result.Alternatives.Where(a => a.Confidence >= _settings.ConfidenceThreshold);
+                result.Alternatives.Where(a => a.Confidence >= _settings.ConfidenceThreshold).OrderByDescending(a => a.Confidence);
 
-            var matchingVoiceCommands = candidateAlternatives.SelectMany(a => FindMatchingCommands(a.Text));
+            List<VoiceCommand> executedCommands = new List<VoiceCommand>();
 
-            matchingVoiceCommands.ForEach(ExecuteVoiceCommand);
+            foreach(var alternative in candidateAlternatives)
+            {
+                var matchingVoiceCmds = _voiceCommands.FindMatchingCommands(_listener.ModelName, alternative.Text).Where(c => !executedCommands.Contains(c));
+
+                matchingVoiceCmds.ForEach(c => ExecuteVoiceCommand(c, alternative.Text));
+
+                executedCommands.AddRange(matchingVoiceCmds);
+
+            }
+
+            executedCommands.Clear();
 
             return true;
         }
@@ -109,8 +119,8 @@ namespace Yetibyte.Unity.SpeechRecognition.KeywordDetection
 
         private void listener_PartialResultFound(object sender, VoskPartialResultEventArgs e)
         {
-
-            ProcessPartialResult(e.PartialResult);
+            if(!_hasConsumedPartialResult)
+                e.Cancel = ProcessPartialResult(e.PartialResult);
 
         }
 
@@ -123,11 +133,6 @@ namespace Yetibyte.Unity.SpeechRecognition.KeywordDetection
             }
 
             _hasConsumedPartialResult = false;
-        }
-
-        private IEnumerable<VoiceCommand> FindMatchingCommands(string detectedText)
-        {
-            return _voiceCommands.Where(v => v.HasMatch(_listener.ModelName, detectedText));
         }
 
         #endregion
