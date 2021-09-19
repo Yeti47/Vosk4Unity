@@ -8,6 +8,8 @@ using UnityEngine;
 
 namespace Yetibyte.Unity.SpeechRecognition.Editor
 {
+
+
     public class VoskAboutWindow : EditorWindow
     {
         private const string COMPANY_NAME = "Yetibyte";
@@ -16,6 +18,9 @@ namespace Yetibyte.Unity.SpeechRecognition.Editor
         private const string VERSION_NUMBER = "0.1";
         private const string PRODUCT_NAME = "Vosk4Unity";
 
+        private const string VOSK_LICENSE = "Apache 2.0";
+        private const string VOSK4UNITY_LICENSE = "MIT";
+
         private const string GITHUB_LINK_VOSK4UNITY = "https://github.com/yeti47/vosk4unity";
         private const string GITHUB_LINK_VOSK = "https://github.com/alphacep/vosk-api";
 
@@ -23,7 +28,7 @@ namespace Yetibyte.Unity.SpeechRecognition.Editor
 
         private const string LOGO_TEXTURE_NAME = "yetibyte_logo";
 
-        private static readonly Vector2 FIXED_SIZE = new Vector2(400, 400);
+        private static readonly Vector2 FIXED_SIZE = new Vector2(400, 420);
 
         private Texture2D _yetibyteLogo;
 
@@ -115,7 +120,21 @@ namespace Yetibyte.Unity.SpeechRecognition.Editor
 
             EditorGUILayout.EndHorizontal();
 
-            EditorGUILayout.Space(32);
+            EditorGUILayout.Space(6);
+
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField($"{PRODUCT_NAME} is distributed under the {VOSK4UNITY_LICENSE} license.", new GUIStyle(EditorStyles.label) { alignment = TextAnchor.MiddleCenter } );
+            
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.Space(1);
+
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField($"Vosk is distributed under the {VOSK_LICENSE} license.", new GUIStyle(EditorStyles.label) { alignment = TextAnchor.MiddleCenter });
+
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.Space(8);
 
             EditorGUILayout.LabelField($"(c) {DateTime.Now.Year} {COMPANY_NAME}", new GUIStyle(EditorStyles.label) { fontSize = 12, alignment = TextAnchor.MiddleCenter });
 
