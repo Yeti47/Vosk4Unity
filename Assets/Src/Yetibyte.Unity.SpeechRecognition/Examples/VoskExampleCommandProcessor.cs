@@ -4,7 +4,8 @@ using System.Linq;
 using UnityEngine;
 using Yetibyte.Unity.SpeechRecognition.KeywordDetection;
 
-namespace Yetibyte.Unity.SpeechRecognition.Examples { 
+namespace Yetibyte.Unity.SpeechRecognition.Examples
+{
 
     public class VoskExampleCommandProcessor : MonoBehaviour
     {

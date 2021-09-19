@@ -6,6 +6,7 @@ using Yetibyte.Unity.SpeechRecognition.KeywordDetection;
 
 namespace Yetibyte.Unity.SpeechRecognition.Editor
 {
+
     [CustomPropertyDrawer(typeof(VoiceCommandList))]
     public class CommandListDrawer : PropertyDrawer
     {
