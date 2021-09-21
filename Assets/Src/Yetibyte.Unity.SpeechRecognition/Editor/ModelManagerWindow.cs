@@ -91,9 +91,9 @@ namespace Yetibyte.Unity.SpeechRecognition.Editor
         #region Props
 
 
-        private static GUIStyle HeaderGuiStyle => new GUIStyle() { fontStyle = FontStyle.Bold };
+        private static GUIStyle HeaderGuiStyle => new GUIStyle(EditorStyles.label) { fontStyle = FontStyle.Bold };
 
-        private static GUIStyle SuperHeaderGuiStyle => new GUIStyle()
+        private static GUIStyle SuperHeaderGuiStyle => new GUIStyle(EditorStyles.label)
         {
             fontStyle = FontStyle.Bold,
             fontSize = 14,
@@ -156,8 +156,8 @@ namespace Yetibyte.Unity.SpeechRecognition.Editor
 
             _scrollPosLocalModels = GUILayout.BeginScrollView(_scrollPosLocalModels, false, true, GUILayout.Height(100));
 
-            GUIStyle nameStyle = new GUIStyle() { fixedWidth = this.position.width * 0.4f, margin = new RectOffset(4, 2, 0, 0) };
-            GUIStyle sizeStyle = new GUIStyle();
+            GUIStyle nameStyle = new GUIStyle(EditorStyles.label) { fixedWidth = this.position.width * 0.4f, margin = new RectOffset(4, 2, 0, 0) };
+            GUIStyle sizeStyle = new GUIStyle(EditorStyles.label);
             GUIStyle actionStyle = new GUIStyle(GUI.skin.button) { fixedWidth = 120 };
 
             foreach (var modelFile in modelFiles)
@@ -263,7 +263,7 @@ namespace Yetibyte.Unity.SpeechRecognition.Editor
 
             GUILayout.EndHorizontal();
 
-            GUIStyle colStyle = new GUIStyle() { clipping = TextClipping.Clip, margin = new RectOffset(4, 2, 0, 0) };
+            GUIStyle colStyle = new GUIStyle(EditorStyles.label) { clipping = TextClipping.Clip, margin = new RectOffset(4, 2, 0, 0) };
 
             GUIStyle nameStyle = new GUIStyle(colStyle) { fixedWidth = nameHeaderStyle.fixedWidth };
             GUIStyle categoryStyle = new GUIStyle(colStyle) { fixedWidth = categoryHeaderStyle.fixedWidth };
