@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
-using Yetibyte.Unity.SpeechRecognition.Editor;
+using Yetibyte.Unity.SpeechRecognition;
 
 namespace Yetibyte.Unity.SpeechRecognition.KeywordDetection
 {

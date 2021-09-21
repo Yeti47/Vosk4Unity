@@ -7,6 +7,7 @@ using Vosk;
 using System.IO;
 using Yetibyte.Unity.Audio;
 using Yetibyte.Unity.SpeechRecognition.Serialization;
+using Yetibyte.Unity.SpeechRecognition.Util;
 
 namespace Yetibyte.Unity.SpeechRecognition
 {
@@ -29,7 +30,7 @@ namespace Yetibyte.Unity.SpeechRecognition
         [SerializeField]
         [Header("Speech Recognition Settings")]
         [Tooltip("The Vosk model to use for speech recognition.")]
-        [Editor.ModelPath]
+        [ModelPath]
         private string _modelName;
 
         [SerializeField]
@@ -59,7 +60,7 @@ namespace Yetibyte.Unity.SpeechRecognition
         private int _audioClipBufferSeconds = 1;
 
         [SerializeField]
-        [Editor.RecordingDevice]
+        [RecordingDevice]
         private string _listeningDevice = null;
 
         [SerializeField]
@@ -110,7 +111,7 @@ namespace Yetibyte.Unity.SpeechRecognition
 
         public string ModelName => _modelName;
 
-        public string AbsoluteModelPath => Editor.VoskModelManagerSettings.GetOrCreateSettings().GetAbsoluteModelPath(_modelName);
+        public string AbsoluteModelPath => System.IO.Path.Combine(Application.dataPath, ModelName);
 
         public bool IsWordMode
         {
@@ -257,8 +258,9 @@ namespace Yetibyte.Unity.SpeechRecognition
                 if (string.IsNullOrWhiteSpace(ModelName) || string.IsNullOrWhiteSpace(AbsoluteModelPath))
                     throw new Exception("Model not specified.");
 
-                if (!Editor.VoskModelManagerSettings.GetOrCreateSettings().ModelExists(ModelName))
-                    throw new Exception($"Model '{ModelName}' does not exist.");
+                //if (!VoskModelManagerSettings.GetOrCreateSettings().ModelExists(ModelName))
+                if (!ModelUtil.ModelPathExists(ModelName))
+                    throw new Exception($"Model '{ModelName}' does not exist at path '{ModelUtil.GetAbsoluteModelPathByRelativePath(ModelName)}'.");
 
                 Model model = new Model(AbsoluteModelPath);
                 _model = model;

@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using Yetibyte.Unity.SpeechRecognition.Editor;
+using Yetibyte.Unity.SpeechRecognition;
 
 namespace Yetibyte.Unity.SpeechRecognition.Examples
 {

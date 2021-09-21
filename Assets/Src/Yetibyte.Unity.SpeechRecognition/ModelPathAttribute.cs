@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Yetibyte.Unity.SpeechRecognition.Editor
+namespace Yetibyte.Unity.SpeechRecognition
 {
     public class ModelPathAttribute : PropertyAttribute
     {

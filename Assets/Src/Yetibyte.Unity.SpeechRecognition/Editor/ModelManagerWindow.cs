@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +8,6 @@ using Yetibyte.Unity.SpeechRecognition.ModelManagement;
 
 namespace Yetibyte.Unity.SpeechRecognition.Editor
 {
-
     public class ModelManagerWindow : EditorWindow
     {
         private class DetailWindow : EditorWindow

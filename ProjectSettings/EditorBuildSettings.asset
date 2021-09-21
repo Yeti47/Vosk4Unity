@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Vosk4Unity_Examples/Vosk4Unity_ExampleScene.unity
+    guid: c81997eb5492a604a9487362d48074d5
   m_configObjects: {}
