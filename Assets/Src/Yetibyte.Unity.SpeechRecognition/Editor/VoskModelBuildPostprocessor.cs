@@ -31,7 +31,7 @@ namespace Yetibyte.Unity.SpeechRecognition.Editor
                     
                     try
                     {
-                        DirectoryUtil.Copy(modelPath, outputModelPath, f => f.Extension.ToLower() != META_FILE_EXTENSION);
+                        DirectoryUtil.CopyDirectory(modelPath, outputModelPath, f => f.Extension.ToLower() != META_FILE_EXTENSION);
                     }
                     catch(Exception ex)
                     {
