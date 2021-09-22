@@ -68,7 +68,10 @@ namespace Yetibyte.Unity.SpeechRecognition.ModelManagement
                 {
                     File.WriteAllBytes(fullFilePath, request.downloadHandler.data);
 
-                    System.IO.Compression.ZipFile.ExtractToDirectory(fullFilePath, fullPath);
+                    ZipFileExtractor zipFileExtractor = ZipFileExtractor.Create();
+                    zipFileExtractor.ExtractToDirectory(fullFilePath, fullPath);
+
+                    //System.IO.Compression.ZipFile.ExtractToDirectory(fullFilePath, fullPath);
 
                     File.Delete(fullFilePath);
                 }
