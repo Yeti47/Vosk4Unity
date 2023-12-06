@@ -130,6 +130,8 @@ namespace Yetibyte.Unity.SpeechRecognition
         public int AudioChunkSize => _audioChunkSize;
 
         public bool AutoLoadModel => _autoLoadModel;
+		
+		public AudioClip MicrophoneAudio => _microphoneAudio;
 
         #endregion
 
